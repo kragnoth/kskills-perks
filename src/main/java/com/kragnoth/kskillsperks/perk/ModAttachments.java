@@ -19,6 +19,11 @@ public final class ModAttachments {
     public static final Supplier<AttachmentType<Boolean>> MAGNET_OFF = REGISTER.register("magnet_off",
             () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).copyOnDeath().build());
 
+    /** The player's Hollow state (1.2.0). */
+    public static final Supplier<AttachmentType<com.kragnoth.kskillsperks.hollow.HollowData>> HOLLOW = REGISTER.register("hollow",
+            () -> AttachmentType.builder(() -> com.kragnoth.kskillsperks.hollow.HollowData.EMPTY)
+                    .serialize(com.kragnoth.kskillsperks.hollow.HollowData.CODEC).copyOnDeath().build());
+
     /** Game time when Last Stand can trigger again. */
     public static final Supplier<AttachmentType<Long>> LAST_STAND_READY = REGISTER.register("last_stand_ready",
             () -> AttachmentType.builder(() -> 0L).serialize(Codec.LONG).copyOnDeath().build());

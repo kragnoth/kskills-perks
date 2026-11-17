@@ -25,6 +25,15 @@ public final class ClientAccess {
     /** Set by the renderer when it sees a new list; outlines last 8 s from then. */
     public static volatile boolean prospectFresh = false;
 
+    /** Hollow meter (1.2.0) */
+    public static volatile float hollowWeight = 0;
+    public static volatile boolean hollowHeld = false;
+
+    public static void onHollow(com.kragnoth.kskillsperks.net.HollowSyncPayload p) {
+        hollowWeight = p.weight();
+        hollowHeld = p.held();
+    }
+
     public static int level(Perk perk) {
         return levels.getOrDefault(perk.id, 0);
     }
@@ -47,6 +56,8 @@ public final class ClientAccess {
     }
 
     public static void reset() {
+        hollowWeight = 0;
+        hollowHeld = false;
         levels = new HashMap<>();
         prospectPositions = List.of();
     }

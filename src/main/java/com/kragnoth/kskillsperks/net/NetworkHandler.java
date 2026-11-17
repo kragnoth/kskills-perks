@@ -16,6 +16,8 @@ public final class NetworkHandler {
                 (payload, ctx) -> ctx.enqueueWork(() -> ClientAccess.onSync(payload)));
         registrar.playToClient(ProspectPayload.TYPE, ProspectPayload.STREAM_CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> ClientAccess.onProspect(payload)));
+        registrar.playToClient(HollowSyncPayload.TYPE, HollowSyncPayload.STREAM_CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> ClientAccess.onHollow(payload)));
         registrar.playToServer(PerkActionPayload.TYPE, PerkActionPayload.STREAM_CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> {
                     if (ctx.player() instanceof ServerPlayer sp) ServerActions.handle(sp, payload.action());

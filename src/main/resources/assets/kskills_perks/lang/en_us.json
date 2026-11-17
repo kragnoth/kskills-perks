@@ -2,5 +2,7 @@
   "key.categories.kskills_perks": "Skill Perks",
   "key.kskills_perks.magnet": "Toggle Item Magnet",
   "key.kskills_perks.dash": "Dash",
-  "key.kskills_perks.prospect": "Prospector's Sense"
+  "key.kskills_perks.prospect": "Prospector's Sense",
+  "hud.kskills_perks.hollow": "Hollow %s%%",
+  "message.kskills_perks.hollow.cold": "It goes cold on you. It answers only to someone the Foundry holds."
 }

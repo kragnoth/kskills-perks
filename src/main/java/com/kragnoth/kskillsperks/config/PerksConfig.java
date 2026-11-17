@@ -13,6 +13,27 @@ public final class PerksConfig {
 
     public static final ModConfigSpec SPEC;
 
+    // Hollow (1.2.0, Gearwright's Hollow endgame)
+    public static final Val<Boolean> HOLLOW_ENABLED;
+    public static final Val<String> HOLLOW_VISION;
+    public static final Val<String> HOLLOW_VISION_TAG;
+    public static final Val<List<? extends Double>> TAKEN_BY_TIER;
+    public static final Val<Double> TAKEN_PER_DAY;
+    public static final Val<Double> TAKEN_CAP;
+    public static final Val<Integer> TAKEN_RADIUS;
+    public static final Val<String> RESIDUE_ITEM;
+    public static final Val<String> DISTILLED_ITEM;
+    public static final Val<List<? extends String>> RESIDUE_BLOCKS;
+    public static final Val<List<? extends Double>> RESIDUE_BLOCK_CHANCE;
+    public static final Val<List<? extends Double>> RESIDUE_UNDEAD_CHANCE;
+    public static final Val<String> REVENANT;
+    public static final Val<Double> DISTILLED_UNDEAD;
+    public static final Val<Double> DISTILLED_REVENANT;
+    public static final Val<Double> DISTILLED_BLOCK;
+    public static final Val<Double> LOCKED_UNIQUE_CHANCE;
+    public static final Val<List<? extends String>> LOCKED_UNIQUES;
+    public static final Val<String> HOLLOWED_SET;
+
     // Bulwark
     public static final Val<Integer> LAST_STAND_COOLDOWN;
     public static final Val<Double> SHIELD_WALL_REDUCTION;
@@ -141,6 +162,36 @@ public final class PerksConfig {
         STOKER_RADIUS = new Val<>(b.defineInRange("stoker_radius", 8, 1, 32));
         STOKER_BONUS = new Val<>(b.comment("Fuel lasts this much longer in furnaces near you").defineInRange("stoker_bonus", 0.5, 0.0, 4.0));
         CAREFUL_HANDS_SAVE = new Val<>(b.comment("Chance per durability point that tools take no wear").defineInRange("careful_hands_save", 0.4, 0.0, 1.0));
+        b.pop();
+
+        b.comment("The Hollow (Gearwright's Hollow endgame). Residue tier 1-4 comes from quests (tags gh_residue_<n>), 5 = Hollowed.")
+                .push("hollow");
+        HOLLOW_ENABLED = new Val<>(b.define("enabled", true));
+        HOLLOW_VISION = new Val<>(b.comment("Wasteland Vision vision a Hollowed player is held in").define("vision", "occult_foundry"));
+        HOLLOW_VISION_TAG = new Val<>(b.comment("Tag Wasteland Vision gives players who see that vision").define("vision_tag", "wv_occult_foundry"));
+        TAKEN_BY_TIER = new Val<>(b.comment("Chance a friendly/neutral spawn near the player is 'taken' (turns hostile), residue tiers 1-5")
+                .defineList("taken_by_tier", List.of(0.02, 0.05, 0.08, 0.12, 0.15), () -> 0.0, o -> o instanceof Double));
+        TAKEN_PER_DAY = new Val<>(b.comment("Added per in-game day held after the Hollow").defineInRange("taken_per_day_held", 0.03, 0.0, 1.0));
+        TAKEN_CAP = new Val<>(b.defineInRange("taken_cap", 0.5, 0.0, 1.0));
+        TAKEN_RADIUS = new Val<>(b.defineInRange("taken_radius", 48, 8, 256));
+        RESIDUE_ITEM = new Val<>(b.define("residue_item", "gearwrights:foundry_residue"));
+        DISTILLED_ITEM = new Val<>(b.define("distilled_item", "gearwrights:distilled_residue"));
+        RESIDUE_BLOCKS = new Val<>(b.defineListAllowEmpty("residue_blocks", List.of("minecraft:deepslate", "minecraft:cobbled_deepslate"),
+                () -> "", o -> o instanceof String));
+        RESIDUE_BLOCK_CHANCE = new Val<>(b.comment("Residue chance per residue block mined, tiers 1-5 (only while seeing the vision)")
+                .defineList("residue_block_chance", List.of(0.005, 0.01, 0.02, 0.03, 0.03), () -> 0.0, o -> o instanceof Double));
+        RESIDUE_UNDEAD_CHANCE = new Val<>(b.comment("Residue chance per undead killed, tiers 1-5")
+                .defineList("residue_undead_chance", List.of(0.02, 0.04, 0.06, 0.08, 0.08), () -> 0.0, o -> o instanceof Double));
+        REVENANT = new Val<>(b.comment("Foundry Revenant mob (overworld): 1-2 residue at tier 5").define("revenant", "incision:skeletoncultist"));
+        DISTILLED_UNDEAD = new Val<>(b.comment("Released players only").defineInRange("distilled_undead", 0.02, 0.0, 1.0));
+        DISTILLED_REVENANT = new Val<>(b.defineInRange("distilled_revenant", 0.25, 0.0, 1.0));
+        DISTILLED_BLOCK = new Val<>(b.defineInRange("distilled_block", 0.004, 0.0, 1.0));
+        LOCKED_UNIQUE_CHANCE = new Val<>(b.comment("Held players killing a revenant: chance of one of locked_uniques (Hallmarked)")
+                .defineInRange("locked_unique_chance", 0.02, 0.0, 1.0));
+        LOCKED_UNIQUES = new Val<>(b.defineListAllowEmpty("locked_uniques", List.of("revenants_shroud", "kiln_hook", "hollow_bell"),
+                () -> "", o -> o instanceof String));
+        HOLLOWED_SET = new Val<>(b.comment("Hallmarked set whose pieces (and the locked uniques) go cold on released players")
+                .define("hollowed_set", "hallmarked.set.hollowed"));
         b.pop();
 
         SPEC = b.build();

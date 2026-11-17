@@ -24,6 +24,11 @@ public final class ClientModEvents {
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, CATEGORY);
 
     @SubscribeEvent
+    public static void onRegisterLayers(net.neoforged.neoforge.client.event.RegisterGuiLayersEvent event) {
+        event.registerAbove(net.neoforged.neoforge.client.gui.VanillaGuiLayers.HOTBAR, KSkillsPerks.id("hollow"), HollowHud::render);
+    }
+
+    @SubscribeEvent
     public static void onRegisterKeys(RegisterKeyMappingsEvent event) {
         event.register(MAGNET);
         event.register(DASH);
