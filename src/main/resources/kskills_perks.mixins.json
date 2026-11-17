@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.kragnoth.kskillsperks.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["ItemStackMixin", "PlayerMixin", "StokerFurnaceMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

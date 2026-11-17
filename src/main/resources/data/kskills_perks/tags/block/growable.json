@@ -1,0 +1,31 @@
+{
+  "values": [
+    "#minecraft:crops",
+    "#minecraft:saplings",
+    "#minecraft:bee_growables",
+    "minecraft:sugar_cane",
+    "minecraft:cactus",
+    "minecraft:bamboo",
+    "minecraft:bamboo_sapling",
+    "minecraft:cocoa",
+    "minecraft:nether_wart",
+    "minecraft:kelp",
+    "minecraft:twisting_vines",
+    "minecraft:weeping_vines",
+    "minecraft:chorus_flower",
+    "minecraft:pitcher_crop",
+    "minecraft:torchflower_crop",
+    {
+      "id": "farmersdelight:rice",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:brown_mushroom_colony",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:red_mushroom_colony",
+      "required": false
+    }
+  ]
+}
