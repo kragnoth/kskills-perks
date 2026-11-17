@@ -15,16 +15,20 @@ import net.puffish.skillsmod.api.util.Result;
 /**
  * Pufferfish's Skills reward type "kskills_perks:perk".
  * JSON: {"type": "kskills_perks:perk", "data": {"perk": "crop_growth", "level": 2}}   ("level" defaults to 1)
+ * Optional (1.1.0): "while_tags" / "unless_tags" (a string or a list): the perk only works while the player carries every
+ * while-tag and none of the unless-tags, e.g. {"perk": "hex", "while_tags": "wv_occult_foundry", "unless_tags": "gh_escaped"}.
  */
 public final class PerkReward implements Reward {
     public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(KSkillsPerks.MOD_ID, "perk");
 
     private final Perk perk;
     private final int level;
+    private final Condition condition;
 
-    private PerkReward(Perk perk, int level) {
+    private PerkReward(Perk perk, int level, Condition condition) {
         this.perk = perk;
         this.level = level;
+        this.condition = condition;
     }
 
     public static void register() {
@@ -49,12 +53,12 @@ public final class PerkReward implements Reward {
         int level = root.get("level").getSuccess()
                 .flatMap(e -> root.getInt("level").getSuccess())
                 .orElse(1);
-        return Result.success(new PerkReward(perk, Math.max(1, level)));
+        return Result.success(new PerkReward(perk, Math.max(1, level), Condition.parse(root)));
     }
 
     @Override
     public void update(RewardUpdateContext context) {
-        PerkManager.set(context.getPlayer(), perk, this, context.getCount() > 0 ? level : 0, context.isAction());
+        PerkManager.set(context.getPlayer(), perk, this, context.getCount() > 0 ? level : 0, condition, context.isAction());
     }
 
     @Override

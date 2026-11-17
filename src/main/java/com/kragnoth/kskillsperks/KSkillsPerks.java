@@ -31,7 +31,9 @@ public class KSkillsPerks {
         modBus.addListener(NetworkHandler::register);
         // Pufferfish's Skills loads skill trees when the server starts, so registering here is early enough.
         PerkReward.register();
-        LOGGER.info("Registered Pufferfish's Skills reward type {}", PerkReward.ID);
+        com.kragnoth.kskillsperks.perk.ConditionalAttributeReward.register();
+        LOGGER.info("Registered Pufferfish's Skills reward types {} and {}", PerkReward.ID,
+                com.kragnoth.kskillsperks.perk.ConditionalAttributeReward.ID);
     }
 
     public static ResourceLocation id(String path) {
